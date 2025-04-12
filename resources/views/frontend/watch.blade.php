@@ -23,11 +23,9 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="anime__video__player">
-                    <video id="player" playsinline controls data-poster="./videos/anime-watch.jpg">
-                        <source src="{{asset('frontend/videos/1.mp4')}}" type="video/mp4" />
-                        <!-- Captions are optional -->
-                        <track kind="captions" label="English captions" src="#" srclang="en" default />
+                <div class="anime__video__player" style="width: 100%; aspect-ratio: 16/9; overflow: hidden;">
+                    <video id="player" playsinline controls preload="metadata" poster="{{ asset('videos/anime-watch.jpg') }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        <source src="{{ url('user/video/2.mp4') }}" type="video/mp4" />
                     </video>
                 </div>
                 <div class="anime__details__episodes">
@@ -115,4 +113,25 @@
     </div>
 </section>
 <!-- Anime Section End -->
+@endsection
+
+@section('js')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const player = new Plyr('#player', {
+        keyboard: { focused: true, global: true }, // Enable keyboard seeking
+        tooltips: { controls: true, seek: true } // Better seeking UX
+    });
+    
+    // Debug seeking issues
+    player.on('seeked', event => {
+        console.log('Seeked to:', player.currentTime);
+    });
+    
+    player.on('error', event => {
+        console.error('Player error:', event.detail);
+    });
+});
+</script>
+
 @endsection

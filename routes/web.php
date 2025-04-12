@@ -47,10 +47,20 @@ Route::get('/register', function () {
 });
 
 Route::group(['prefix' => 'user','namespace'=>"User"], function () {
+    Route::get('/watch', 'VideoController@video')->name('user.watch.video');
+    Route::get('/video/{filename}', 'VideoController@stream')->name('user.watch.stream');
 });
 
 Route::group(['prefix' => 'admin','namespace'=>"Admin"], function () {
     Route::get('/dashboard', 'DashboardController@index')->name('admin.dashboard.index');
+
+    Route::get('/movies', 'MovieController@index')->name('admin.movies.index');
+    Route::get('/movies/add', 'MovieController@add')->name('admin.movies.add');
+    Route::get('/movies/edit/{id}', 'MovieController@edit')->name('admin.movies.edit');
+    Route::get('/movies/delete/{id}', 'MovieController@delete')->name('admin.movies.delete');
+    Route::post('/movies/save', 'MovieController@save')->name('admin.movies.save');
+    Route::post('/movies/update', 'MovieController@update')->name('admin.movies.update');
+    
 });
 
 Route::group(['prefix' => 'auth','namespace'=>"Auth"], function () {

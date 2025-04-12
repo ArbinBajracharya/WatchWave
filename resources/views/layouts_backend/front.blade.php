@@ -13,6 +13,8 @@
 
     <link rel="icon" href="{{asset('backend/dist/images/kaiadmin/favicon.ico')}}" type="image/x-icon">
 
+    
+
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{asset('backend/dist/css/bootstrap.min.css')}}" />
     <link rel="stylesheet" href="{{asset('backend/dist/css/plugins.min.css')}}" />
@@ -37,6 +39,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     @yield('link')
 
@@ -114,6 +117,7 @@
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="{{asset('backend/dist/js/setting-demo.js')}}"></script>
     <script src="{{asset('backend/dist/js/demo.js')}}"></script>
+
     <script>
       $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
         type: "line",
