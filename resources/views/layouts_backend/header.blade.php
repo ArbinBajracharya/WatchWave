@@ -52,15 +52,64 @@
               <h4 class="text-section">Movies</h4>
             </li>
             <li class="nav-item">
-              <a data-bs-toggle="collapse" href="#base">
+              <a data-bs-toggle="collapse" href="#movie">
                 <i class="fas fa-layer-group"></i>
                 <p>Movies</p>
                 <span class="caret"></span>
               </a>
-              <div class="collapse" id="base">
+              <div class="collapse" id="movie">
                 <ul class="nav nav-collapse">
                   <li>
                     <a href="{{route('admin.movies.index')}}">
+                      <span class="sub-item">List</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{{route('admin.movies.sidebar')}}">
+                      <span class="sub-item">Active</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-section">
+              <span class="sidebar-mini-icon">
+                <i class="fa fa-ellipsis-h"></i>
+              </span>
+              <h4 class="text-section">Cast</h4>
+            </li>
+            <li class="nav-item">
+              <a data-bs-toggle="collapse" href="#cast">
+                <i class="fas fa-layer-group"></i>
+                <p>Cast</p>
+                <span class="caret"></span>
+              </a>
+              <div class="collapse" id="cast">
+                <ul class="nav nav-collapse">
+                  <li>
+                    <a href="{{route('admin.cast.index')}}">
+                      <span class="sub-item">List</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-section">
+              <span class="sidebar-mini-icon">
+                <i class="fa fa-ellipsis-h"></i>
+              </span>
+              <h4 class="text-section">Director</h4>
+            </li>
+            <li class="nav-item">
+              <a data-bs-toggle="collapse" href="#director">
+                <i class="fas fa-layer-group"></i>
+                <p>Director</p>
+                <span class="caret"></span>
+              </a>
+              <div class="collapse" id="director">
+                <ul class="nav nav-collapse">
+                  <li>
+                    <a href="{{route('admin.director.index')}}">
                       <span class="sub-item">List</span>
                     </a>
                   </li>

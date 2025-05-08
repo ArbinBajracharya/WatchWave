@@ -117,8 +117,14 @@
                     <div class="col-md-6 col-lg-4">
                       <!-- Video Input -->
                       <div class="form-group" id="videoGroup">
-                        <label for="video">Video</label>
-                        <input type="file" class="form-control" id="video" name="video" accept="video/*">
+                        <div id="upload-container">
+                          <label>Video</label>
+                          <input type="hidden" name="video_path">
+                          <input type="file" class="form-control" id="browseButton" name="video" accept="video/*">
+                          <div id="upload-progress" style="display: none; width: 100%; background: #eee;">
+                              <div id="progress-bar" style="width: 0; height: 20px; background: green;"></div>
+                          </div>
+                        </div>
                       </div>
                     
                       <!-- Trailer Input (Initially Hidden) -->
@@ -192,6 +198,44 @@
   if ($('#typeSelect').val() === 'trailer') {
     $('#preRelease').prop('checked', true).trigger('change');
   }
+});
+
+let r = new Resumable({
+    target: '/upload-chunks',
+    query: {_token: '{{ csrf_token() }}'},
+    fileType: ['mp4', 'mov', 'avi'],
+    chunkSize: 10 * 1024 * 1024, // 10MB
+    testChunks: false,
+    throttleProgressCallbacks: 1,
+});
+
+r.assignBrowse(document.getElementById('browseButton'));
+    
+r.on('fileAdded', function(file) {
+    // Show progress bar
+    document.getElementById('upload-progress').style.display = 'block';
+
+    // Start upload
+    r.upload();
+});
+
+r.on('fileProgress', function(file) {
+    let progress = Math.floor(file.progress() * 100);
+    document.getElementById('progress-bar').style.width = progress + '%';
+});
+
+r.on('fileSuccess', function(file, message) {
+    let response = JSON.parse(message);
+    if (response.done) {
+        console.log('Upload complete: ' + response.filename);
+        document.querySelector('input[name="video_path"]').value = response.filename;
+    }
+    alert('Upload complete');
+
+});
+
+r.on('fileError', function(file, message) {
+    alert('Upload failed: ' + message);
 });
 </script>
 @endsection

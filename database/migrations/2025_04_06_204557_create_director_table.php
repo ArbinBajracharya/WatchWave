@@ -19,7 +19,7 @@ class CreateDirectorTable extends Migration
             $table->string('name')->nullable();
             $table->string('dob')->nullable();
             $table->string('country')->nullable();
-            $table->string('descripton')->nullable();
+            $table->text('descripton')->nullable();
             $table->string('picture')->nullable();
             $table->timestamps();
         });

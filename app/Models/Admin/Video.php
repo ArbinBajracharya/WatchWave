@@ -2,6 +2,7 @@
 
 namespace App\Models\Admin;
 
+use App\Models\User\Comments;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,6 +27,13 @@ class Video extends Model
         'trailer',
         'description',
         'rating',
-        'comments'
+        'comments',
+        'watchlist',
+        'likes',
     ];
+
+    public function comments()
+    {
+        return $this->hasMany(Comments::class, 'video_id');
+    }
 }

@@ -118,6 +118,9 @@
     <script src="{{asset('backend/dist/js/setting-demo.js')}}"></script>
     <script src="{{asset('backend/dist/js/demo.js')}}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/resumablejs/resumable.js"></script>
+
+
     <script>
       $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
         type: "line",

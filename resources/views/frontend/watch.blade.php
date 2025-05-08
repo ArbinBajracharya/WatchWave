@@ -9,8 +9,7 @@
                 <div class="breadcrumb__links">
                     <a href="{{url('/')}}"><i class="fa fa-home"></i> Home</a>
                     <a href="{{url('/categories')}}">Categories</a>
-                    <a href="#">Romance</a>
-                    <span>Fate Stay Night: Unlimited Blade</span>
+                    <span>{{$video->title}}</span>
                 </div>
             </div>
         </div>
@@ -24,8 +23,12 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="anime__video__player" style="width: 100%; aspect-ratio: 16/9; overflow: hidden;">
-                    <video id="player" playsinline controls preload="metadata" poster="{{ asset('videos/anime-watch.jpg') }}" style="width: 100%; height: 100%; object-fit: cover;">
-                        <source src="{{ url('user/video/2.mp4') }}" type="video/mp4" />
+                    <video id="player" playsinline controls preload="metadata" poster="{{ asset('images/'.$video->picture) }}" style="width: 100%; height: 100%; object-fit: contain;">
+                        @if($video->type == 'trailer')
+                            <source src="{{ url('user/video/'.$video->trailer) }}" type="video/mp4" />
+                        @else
+                            <source src="{{ url('user/video/'.$video->video) }}" type="video/mp4" />
+                        @endif
                     </video>
                 </div>
                 <div class="anime__details__episodes">
@@ -131,7 +134,24 @@ document.addEventListener('DOMContentLoaded', function() {
     player.on('error', event => {
         console.error('Player error:', event.detail);
     });
+
+    setTimeout(function () {
+            $.ajax({
+                url: 'video/{{ $video->id }}/increase-view',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                    console.log(response.message);
+                },
+                error: function () {
+                    console.error('Failed to increase view count');
+                }
+            });
+        }, 5000); // Wait 5 seconds
 });
+
 </script>
 
 @endsection

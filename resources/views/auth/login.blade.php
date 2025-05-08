@@ -23,18 +23,28 @@
             <div class="col-lg-6">
                 <div class="login__form">
                     <h3>Login</h3>
-                    <form action="#">
+                    <form action="{{ route('login') }}" method="POST">
+                        @csrf
                         <div class="input__item">
-                            <input type="text" placeholder="Email address">
+                            <input type="email" name="email" placeholder="Email address" value="{{ old('email') }}" required autofocus>
                             <span class="icon_mail"></span>
                         </div>
                         <div class="input__item">
-                            <input type="text" placeholder="Password">
+                            <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
                             <span class="icon_lock"></span>
                         </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" name="remember" id="remember" class="form-check-input">
+                            <label for="remember" class="form-check-label">Remember me</label>
+                        </div>
                         <button type="submit" class="site-btn">Login Now</button>
+                        
+                        @if (Route::has('password.request'))
+                            <a class="forgot-pass" href="{{ route('password.request') }}">
+                                Forgot your password?
+                            </a>
+                        @endif
                     </form>
-                    <a href="#" class="forget_pass">Forgot Your Password?</a>
                 </div>
             </div>
             <div class="col-lg-6">

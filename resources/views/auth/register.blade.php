@@ -23,22 +23,27 @@
             <div class="col-lg-6">
                 <div class="login__form">
                     <h3>Sign Up</h3>
-                    <form action="#">
+                    <form action="{{ route('register') }}" method="POST">
+                        @csrf
                         <div class="input__item">
-                            <input type="text" placeholder="Email address">
-                            <span class="icon_mail"></span>
-                        </div>
-                        <div class="input__item">
-                            <input type="text" placeholder="Your Name">
+                            <input type="text" name="name" placeholder="Name" required autofocus>
                             <span class="icon_profile"></span>
                         </div>
                         <div class="input__item">
-                            <input type="text" placeholder="Password">
+                            <input type="email" name="email" placeholder="Email address" required>
+                            <span class="icon_mail"></span>
+                        </div>
+                        <div class="input__item">
+                            <input type="password" name="password" placeholder="Password" required autocomplete="new-password">
                             <span class="icon_lock"></span>
                         </div>
-                        <button type="submit" class="site-btn">Login Now</button>
+                        <div class="input__item">
+                            <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
+                            <span class="icon_lock"></span>
+                        </div>
+                        <button type="submit" class="site-btn">Register Now</button>
                     </form>
-                    <h5>Already have an account? <a href="#">Log In!</a></h5>
+                    <h5>Already have an account? <a href="{{url('/login')}}">Log In!</a></h5>
                 </div>
             </div>
             <div class="col-lg-6">

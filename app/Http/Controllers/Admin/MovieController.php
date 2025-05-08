@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\Video;
 use App\Models\Admin\Cast;
 use App\Models\Admin\Director;
+use App\Models\User;
 use Illuminate\Http\Request;
 use FFMpeg\FFMpeg;
 use FFMpeg\Format\Video\X264;
@@ -25,6 +26,27 @@ class MovieController extends Controller
         }
 
         return view('admin.movies.movies_list', compact('movies'));
+    }
+
+    public function active_list()
+    {
+        $actives = Video::where('homepage', 'active')->get();
+
+        foreach ($actives as $movie) {
+            $movie->genre = json_decode($movie->genre);
+            $movie->cast = json_decode($movie->cast);
+            $movie->director = json_decode($movie->director);
+        }
+
+        $movies = Video::where('homepage',NUll)->get();
+
+        foreach ($movies as $movie) {
+            $movie->genre = json_decode($movie->genre);
+            $movie->cast = json_decode($movie->cast);
+            $movie->director = json_decode($movie->director);
+        }
+
+        return view('admin.movies.movies_sider', compact('movies', 'actives'));
     }
 
     public function add()
@@ -55,7 +77,7 @@ class MovieController extends Controller
             }
 
             // Delete the trailer file
-            $trailerPath = public_path('trailer/' . $video->trailer);
+            $trailerPath = public_path('videos/' . $video->trailer);
             if (!empty($video->trailer) && file_exists($trailerPath) && is_file($trailerPath)) {
                 unlink($trailerPath);
             }
@@ -67,6 +89,28 @@ class MovieController extends Controller
 
         return redirect()->route('admin.movies.index')->with('success', 'Movie deleted successfully!');
         
+    }
+
+    public function active_movie($id)
+    {
+        $video = Video::find($id);
+        if ($video) {
+            $video->homepage = 'active';
+            $video->save();
+        }
+
+        return redirect()->route('admin.movies.sidebar')->with('success', 'Movie activated successfully!');
+    }
+
+    public function inactive_movie($id)
+    {
+        $video = Video::find($id);
+        if ($video) {
+            $video->homepage = NULL;
+            $video->save();
+        }
+
+        return redirect()->route('admin.movies.sidebar')->with('success', 'Movie deactivated successfully!');
     }
 
     public function save(Request $request)
@@ -100,26 +144,16 @@ class MovieController extends Controller
             $videoData['picture'] = $pictureName;
         }
 
-        if ($request->hasFile('video')) {
-            $videoFile = $request->file('video');
-            
-            // Generate a unique name using timestamp
-            $videoName = time() . '.' . $videoFile->getClientOriginalExtension();
-            
-            // Use Laravel's store() method to store the video in 'public/videos'
-            $path = $videoFile->storeAs('videos', $videoName, 'public');
-            
-            // Save just the file name to the database
-            $videoData['video'] = $videoName;
+        if ($request->filled('video_path')) {
+            $videoData['video'] = basename($request->input('video_path'));
         }
-    
 
         if ($request->hasFile('trailer')) {
             $videoFile = $request->file('trailer');
             $videoName = time() . '.' . $videoFile->getClientOriginalExtension();
             
             // Move the video to the public/videos directory
-            $videoFile->move(public_path('trailer'), $videoName);
+            $videoFile->move(public_path('videos'), $videoName);
             
             // Add the video name to your data array
             $videoData['trailer'] = $videoName;
@@ -224,10 +258,10 @@ class MovieController extends Controller
         
             $compressedImage->save(public_path('images/' . $pictureName));
         
-            $videoData['picture'] = $pictureName;
+            $video->picture = $pictureName;
         }
 
-        if ($request->hasFile('video')) {
+        if ($request->filled('video_path')) {
             // Delete old video file
             if (!empty($video->video)) {
                 $oldVideoPath = public_path('videos/' . $video->video);
@@ -235,14 +269,16 @@ class MovieController extends Controller
                     unlink($oldVideoPath);
                 }
             }
-        
-            $videoFile = $request->file('video');
-            $videoName = time() . '.' . $videoFile->getClientOriginalExtension();
-        
-            // Move new video to public/videos
-            $videoFile->move(public_path('videos'), $videoName);
-        
-            $videoData['video'] = $videoName;
+
+            if (!empty($video->trailer)) {
+                $oldTrailerPath = public_path('videos/' . $video->trailer);
+                if (file_exists($oldTrailerPath) && is_file($oldTrailerPath)) {
+                    unlink($oldTrailerPath);
+                }
+            }
+
+            $video->video = basename($request->input('video_path'));
+            $video->trailer = NULL;
         }
         
         // Update trailer file
@@ -261,7 +297,7 @@ class MovieController extends Controller
             // Move new trailer to public/trailer
             $trailerFile->move(public_path('trailer'), $trailerName);
         
-            $videoData['trailer'] = $trailerName;
+            $video->trailer = $trailerName;
         }
 
         $video->save();
@@ -335,8 +371,5 @@ class MovieController extends Controller
         }
 
         return redirect()->route('admin.movies.index')->with('success', 'Movie updated successfully!');
-
-        
     }
-
 }
