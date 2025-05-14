@@ -216,7 +216,7 @@
 let r = new Resumable({
     target: '/upload-chunks',
     query: {_token: '{{ csrf_token() }}'},
-    fileType: ['mp4', 'mov', 'avi'],
+    fileType: ['mp4', 'mov', 'avi','mkv'],
     chunkSize: 10 * 1024 * 1024, // 10MB
     testChunks: false,
     throttleProgressCallbacks: 1,

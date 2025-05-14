@@ -258,7 +258,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        @if(isset($fantesys)&&count($fanteys) > 0)
+                        @if(isset($fantesys)&&count($fantesys) > 0)
                             @foreach($fantesys as $fantesy)
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="product__item">

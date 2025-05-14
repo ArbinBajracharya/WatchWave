@@ -24,13 +24,13 @@
                             <li class="{{ request()->is('user/categories') ? 'active' : "" }}"><a href="{{url('user/categories')}}">Categories</span></a></li>
                             {{-- <li class="{{ request()->is('blogs') ? 'active' : "" }}"><a href="{{url('/blogs')}}">Our Blog</a></li> --}}
                             {{-- <li class="{{ request()->is('contacts') ? 'active' : "" }}"><a href="#">Contacts</a></li> --}}
-                            <li><a href="#">More <span class="arrow_carrot-down"></span></a>
+                            {{-- <li><a href="#">More <span class="arrow_carrot-down"></span></a>
                                 <ul class="dropdown">
                                     <li><a href="{{url('/details')}}">Anime Details</a></li>
                                     <li><a href="{{url('/watch')}}">Anime Watching</a></li>
                                     <li><a href="{{url('blog-details')}}">Blog Details</a></li>
                                 </ul>
-                            </li>
+                            </li> --}}
                         </ul>
                     </nav>
                 </div>

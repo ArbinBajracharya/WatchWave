@@ -14,13 +14,24 @@ class MovieController extends Controller
     {
         $details = Video::where('id', $id)->first();
         $comments = Comments::where('video_id', $id)->get();
-        return view('frontend.details', compact('details', 'comments'));
+
+        $genres = json_decode($details->genre, true);
+        $relatedVideos = Video::where('id', '!=', $id)
+            ->where(function ($query) use ($genres) {
+                foreach ($genres as $genre) {
+                    $query->orWhereJsonContains('genre', $genre);
+                }
+            })
+            ->take(4)
+            ->get();
+        return view('frontend.details', compact('details', 'comments', 'relatedVideos'));
     }
 
     public function video($id)
     {
         $video = Video::where('id', $id)->first();
-        return view('frontend.watch', compact('video'));
+        $comments = Comments::where('video_id', $id)->get();
+        return view('frontend.watch', compact('video','comments'));
     }
 
     public function watchlist($id)

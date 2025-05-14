@@ -27,17 +27,17 @@ class HomeController extends Controller
     {
         $sliders = Video::where('homepage', 'active')->get();
 
-        $videos = Video::withCount('comments')->get();
+        $videos = Video::withCount('comments')->take(6)->get();
 
         $populars = Video::withCount('comments')
             ->orderBy('comments_count', 'desc')
-            ->take(10)
+            ->take(6)
             ->get();
 
         $actions = Video::whereJsonContains('genre', 'action')->take(6)->get();
         $adventures = Video::whereJsonContains('genre', 'adventure')->take(6)->get();
         $comedys = Video::whereJsonContains('genre', 'comedy')->take(6)->get();
-        $fantasys = Video::whereJsonContains('genre', 'fantasy')->take(6)->get();
+        $fantesys = Video::whereJsonContains('genre', 'fantesy')->take(6)->get();
         $fictions = Video::whereJsonContains('genre', 'fiction')->take(6)->get();
         $horrors = Video::whereJsonContains('genre', 'horror')->take(6)->get();
         $romances = Video::whereJsonContains('genre', 'romance')->take(6)->get();
@@ -45,9 +45,9 @@ class HomeController extends Controller
 
 
         $mostviews = Video::orderBy('view', 'desc')
-            ->take(5)
+            ->take(10)
             ->get();
 
-        return view('index',compact('videos', 'sliders' ,'populars', 'mostviews','actions','adventures','comedys','fantasys','fictions','horrors','romances'));
+        return view('index',compact('videos', 'sliders' ,'populars', 'mostviews','actions','adventures','comedys','fantesys','fictions','horrors','romances'));
     }
 }

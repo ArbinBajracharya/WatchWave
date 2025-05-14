@@ -45,69 +45,30 @@
                     <div class="section-title">
                         <h5>Reviews</h5>
                     </div>
-                    <div class="anime__review__item">
-                        <div class="anime__review__item__pic">
-                            <img src="{{asset('frontend/images/anime/review-1.jpg')}}" alt="">
-                        </div>
-                        <div class="anime__review__item__text">
-                            <h6>Chris Curry - <span>1 Hour ago</span></h6>
-                            <p>whachikan Just noticed that someone categorized this as belonging to the genre
-                            "demons" LOL</p>
-                        </div>
-                    </div>
-                    <div class="anime__review__item">
-                        <div class="anime__review__item__pic">
-                            <img src="{{asset('frontend/images/anime/review-2.jpg')}}" alt="">
-                        </div>
-                        <div class="anime__review__item__text">
-                            <h6>Lewis Mann - <span>5 Hour ago</span></h6>
-                            <p>Finally it came out ages ago</p>
-                        </div>
-                    </div>
-                    <div class="anime__review__item">
-                        <div class="anime__review__item__pic">
-                            <img src="{{asset('frontend/images/anime/review-3.jpg')}}" alt="">
-                        </div>
-                        <div class="anime__review__item__text">
-                            <h6>Louis Tyler - <span>20 Hour ago</span></h6>
-                            <p>Where is the episode 15 ? Slow update! Tch</p>
-                        </div>
-                    </div>
-                    <div class="anime__review__item">
-                        <div class="anime__review__item__pic">
-                            <img src="{{asset('frontend/images/anime/review-4.jpg')}}" alt="">
-                        </div>
-                        <div class="anime__review__item__text">
-                            <h6>Chris Curry - <span>1 Hour ago</span></h6>
-                            <p>whachikan Just noticed that someone categorized this as belonging to the genre
-                            "demons" LOL</p>
-                        </div>
-                    </div>
-                    <div class="anime__review__item">
-                        <div class="anime__review__item__pic">
-                            <img src="{{asset('frontend/images/anime/review-5.jpg')}}" alt="">
-                        </div>
-                        <div class="anime__review__item__text">
-                            <h6>Lewis Mann - <span>5 Hour ago</span></h6>
-                            <p>Finally it came out ages ago</p>
-                        </div>
-                    </div>
-                    <div class="anime__review__item">
-                        <div class="anime__review__item__pic">
-                            <img src="{{asset('frontend/images/anime/review-6.jpg')}}" alt="">
-                        </div>
-                        <div class="anime__review__item__text">
-                            <h6>Louis Tyler - <span>20 Hour ago</span></h6>
-                            <p>Where is the episode 15 ? Slow update! Tch</p>
-                        </div>
-                    </div>
+                    @if(isset($comments) && count($comments) > 0)
+                        @foreach($comments as $comment)
+                            <div class="anime__review__item">
+                                <div class="anime__review__item__pic">
+                                    <img src="{{asset('frontend/images/anime/review-1.jpg')}}" alt="">
+                                </div>
+                                <div class="anime__review__item__text">
+                                    <h6>{{ucfirst($comment->user->name)}} - <span>{{$comment->created_at->diffForHumans()}}</span></h6>
+                                    <p>{{$comment->comment}}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <p class="text-white">No reviews yet. Be the first to review!</p>
+                    @endif
                 </div>
                 <div class="anime__details__form">
                     <div class="section-title">
                         <h5>Your Comment</h5>
                     </div>
-                    <form action="#">
-                        <textarea placeholder="Your Comment"></textarea>
+                    <form action="{{route('user.comment.store')}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="video_id" value="{{$video->id}}">
+                        <textarea name="comment" placeholder="Your Comment"></textarea>
                         <button type="submit"><i class="fa fa-location-arrow"></i> Review</button>
                     </form>
                 </div>
@@ -149,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('Failed to increase view count');
                 }
             });
-        }, 5000); // Wait 5 seconds
+        }, 5000);
 });
 
 </script>

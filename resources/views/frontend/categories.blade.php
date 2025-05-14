@@ -40,11 +40,16 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="product__page__filter">
-                                    <p>Order by:</p>
-                                    <select>
-                                        <option value="">A-Z</option>
-                                        <option value="">1-10</option>
-                                        <option value="">10-50</option>
+                                    <p>Sort by:</p>
+                                    <select id="category-sort">
+                                        <option value="">Select Genre</option>
+                                        <option value="action">Action</option>
+                                        <option value="adventure">Adventure</option>
+                                        <option value="comedy">Comedy</option>
+                                        <option value="fantesy">Fantesy</option>
+                                        <option value="fiction">Fiction</option>
+                                        <option value="horror">Horror</option>
+                                        <option value="romance">Romance</option>
                                     </select>
                                 </div>
                             </div>
@@ -185,4 +190,17 @@
     </div> --}}
 </section>
 <!-- Product Section End -->
+@endsection
+
+@section('js')
+<script>
+    // Sort by category
+    $('#category-sort').on('change', function () {
+        const type = $(this).val();
+        if (type) {
+            window.location.href = "{{ url('user/categories') }}/" + type;
+        }
+    });
+
+</script>
 @endsection

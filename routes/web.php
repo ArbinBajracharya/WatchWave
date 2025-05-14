@@ -75,7 +75,7 @@ Route::group(['prefix' => 'user','namespace'=>"User"], function () {
 
 });
 
-Route::group(['prefix' => 'admin','namespace'=>"Admin"], function () {
+Route::group(['prefix' => 'admin','middleware'=>'admin','namespace'=>"Admin"], function () {
     Route::get('/dashboard', 'DashboardController@index')->name('admin.dashboard.index');
 
     // Movie Routes
