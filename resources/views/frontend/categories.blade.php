@@ -81,14 +81,14 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="product__pagination">
+                {{-- <div class="product__pagination">
                     <a href="#" class="current-page">1</a>
                     <a href="#">2</a>
                     <a href="#">3</a>
                     <a href="#">4</a>
                     <a href="#">5</a>
                     <a href="#"><i class="fa fa-angle-double-right"></i></a>
-                </div>
+                </div> --}}
             </div>
             <div class="col-lg-4 col-md-6 col-sm-8">
                 <div class="product__sidebar">
@@ -102,7 +102,7 @@
                                 data-setbg="{{url('images/'.$mostview->picture)}}">
                                 <div class="ep">{{ucfirst($mostview->type)}}</div>
                                 <div class="view"><i class="fa fa-eye"></i> {{$mostview->view}}</div>
-                                <h5><a href="#">{{$mostview->title}}</a></h5>
+                                <h5><a href="{{url('user/details/'.$mostview->id)}}">{{$mostview->title}}</a></h5>
                             </div>
                         @endforeach
                         {{-- <div class="product__sidebar__view__item set-bg mix month week"

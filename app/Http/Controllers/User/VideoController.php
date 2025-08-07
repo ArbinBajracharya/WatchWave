@@ -15,10 +15,6 @@ class VideoController extends Controller
         // Set the path to your video file
         $path = public_path('videos/' . $filename);
 
-        // or
-        // $path = storage_path('app/videos/' . $filename);
-        // dd($path);
-        
         // Rest of the function remains exactly the same
         if (!file_exists($path)) {
             abort(404, 'Video file not found');

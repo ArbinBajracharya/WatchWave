@@ -429,7 +429,7 @@
                                 data-setbg="{{('images/'.$mostview->picture)}}">
                                 <div class="ep">{{ucfirst($mostview->type)}}</div>
                                 <div class="view"><i class="fa fa-eye"></i> {{$mostview->view}}</div>
-                                <h5><a href="#">{{$mostview->title}}</a></h5>
+                                <h5><a href="{{url('user/details/'.$mostview->id)}}">{{$mostview->title}}</a></h5>
                             </div>
                         @endforeach
                         {{-- <div class="product__sidebar__view__item set-bg mix month week"

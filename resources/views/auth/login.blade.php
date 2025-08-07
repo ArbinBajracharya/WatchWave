@@ -28,17 +28,23 @@
                         <div class="input__item">
                             <input type="email" name="email" placeholder="Email address" value="{{ old('email') }}" required autofocus>
                             <span class="icon_mail"></span>
+                            @error('email')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="input__item">
                             <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
                             <span class="icon_lock"></span>
+                            @error('password')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-check mb-3">
                             <input type="checkbox" name="remember" id="remember" class="form-check-input">
                             <label for="remember" class="form-check-label">Remember me</label>
                         </div>
                         <button type="submit" class="site-btn">Login Now</button>
-                        
+
                         @if (Route::has('password.request'))
                             <a class="forgot-pass" href="{{ route('password.request') }}">
                                 Forgot your password?
@@ -47,6 +53,7 @@
                     </form>
                 </div>
             </div>
+
             <div class="col-lg-6">
                 <div class="login__register">
                     <h3>Dont’t Have An Account?</h3>
